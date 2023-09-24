@@ -11,14 +11,13 @@
 		A2F1A5E12ABFDA6F00EE164D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */; };
 		A2F1A5E32ABFDA7000EE164D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5E22ABFDA7000EE164D /* Assets.xcassets */; };
 		A2F1A5E62ABFDA7000EE164D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5E52ABFDA7000EE164D /* Preview Assets.xcassets */; };
-		A2F1A5EF2ABFDDB400EE164D /* Lamb-default.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5EE2ABFDDB400EE164D /* Lamb-default.gif */; };
 		A2F1A5F42ABFE3F800EE164D /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F32ABFE3F800EE164D /* GIFImage.swift */; };
 		A2F1A5F62ABFE60D00EE164D /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F52ABFE60D00EE164D /* GameView.swift */; };
 		A2F1A5F82ABFE75500EE164D /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F72ABFE75500EE164D /* StatsView.swift */; };
 		A2F1A5FA2ABFE76F00EE164D /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F92ABFE76F00EE164D /* RulesView.swift */; };
 		A2F1A5FC2ABFE9EE00EE164D /* Lamb-dance.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5FB2ABFE9EE00EE164D /* Lamb-dance.gif */; };
-		A2F1A5FE2ABFE9F800EE164D /* Lamb-default.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5FD2ABFE9F800EE164D /* Lamb-default.gif */; };
 		A2F1A6002ABFEA4800EE164D /* Lamb-evil.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5FF2ABFEA4800EE164D /* Lamb-evil.gif */; };
+		A2F1A6092ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A6082ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,14 +26,14 @@
 		A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2F1A5E22ABFDA7000EE164D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2F1A5E52ABFDA7000EE164D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A2F1A5EE2ABFDDB400EE164D /* Lamb-default.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Lamb-default.gif"; path = "../../../../../Downloads/Lamb-default.gif"; sourceTree = "<group>"; };
 		A2F1A5F32ABFE3F800EE164D /* GIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImage.swift; sourceTree = "<group>"; };
 		A2F1A5F52ABFE60D00EE164D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		A2F1A5F72ABFE75500EE164D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		A2F1A5F92ABFE76F00EE164D /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		A2F1A5FB2ABFE9EE00EE164D /* Lamb-dance.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Lamb-dance.gif"; path = "../../../../Downloads/Lamb-dance.gif"; sourceTree = "<group>"; };
-		A2F1A5FD2ABFE9F800EE164D /* Lamb-default.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Lamb-default.gif"; path = "../../../../Downloads/Lamb-default.gif"; sourceTree = "<group>"; };
 		A2F1A5FF2ABFEA4800EE164D /* Lamb-evil.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Lamb-evil.gif"; path = "../../../../Downloads/Lamb-evil.gif"; sourceTree = "<group>"; };
+		A2F1A6082ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Piazzolla-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
+		A2F1A60A2ABFF09D00EE164D /* Knucklebones-Prototype-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Knucklebones-Prototype-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +66,8 @@
 		A2F1A5DD2ABFDA6F00EE164D /* Knucklebones_Prototype */ = {
 			isa = PBXGroup;
 			children = (
+				A2F1A60A2ABFF09D00EE164D /* Knucklebones-Prototype-Info.plist */,
+				A2F1A6052ABFEFEB00EE164D /* Font */,
 				A2F1A5DE2ABFDA6F00EE164D /* Knucklebones_PrototypeApp.swift */,
 				A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */,
 				A2F1A5F52ABFE60D00EE164D /* GameView.swift */,
@@ -74,7 +75,6 @@
 				A2F1A5F92ABFE76F00EE164D /* RulesView.swift */,
 				A2F1A5F32ABFE3F800EE164D /* GIFImage.swift */,
 				A2F1A5E22ABFDA7000EE164D /* Assets.xcassets */,
-				A2F1A5FD2ABFE9F800EE164D /* Lamb-default.gif */,
 				A2F1A5FB2ABFE9EE00EE164D /* Lamb-dance.gif */,
 				A2F1A5FF2ABFEA4800EE164D /* Lamb-evil.gif */,
 				A2F1A5E42ABFDA7000EE164D /* Preview Content */,
@@ -85,10 +85,17 @@
 		A2F1A5E42ABFDA7000EE164D /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				A2F1A5EE2ABFDDB400EE164D /* Lamb-default.gif */,
 				A2F1A5E52ABFDA7000EE164D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A2F1A6052ABFEFEB00EE164D /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				A2F1A6082ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,9 +158,8 @@
 			files = (
 				A2F1A6002ABFEA4800EE164D /* Lamb-evil.gif in Resources */,
 				A2F1A5E62ABFDA7000EE164D /* Preview Assets.xcassets in Resources */,
-				A2F1A5EF2ABFDDB400EE164D /* Lamb-default.gif in Resources */,
+				A2F1A6092ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf in Resources */,
 				A2F1A5FC2ABFE9EE00EE164D /* Lamb-dance.gif in Resources */,
-				A2F1A5FE2ABFE9F800EE164D /* Lamb-default.gif in Resources */,
 				A2F1A5E32ABFDA7000EE164D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +307,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Knucklebones_Prototype/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Knucklebones-Prototype-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,6 +336,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Knucklebones_Prototype/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Knucklebones-Prototype-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

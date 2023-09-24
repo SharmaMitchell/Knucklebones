@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    let lambAnimations = ["Lamb-default","Lamb-dance", "Lamb-evil"]
+    let lambAnimations = ["Lamb-dance", "Lamb-evil"]
     var randomAnimation: String {
         return lambAnimations.randomElement() ?? ""
     }
