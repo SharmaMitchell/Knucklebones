@@ -9,13 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView{
+            GameView()
+                .tabItem{
+                    Label("Game", systemImage: "dice")
+                }
+            StatsView()
+                .tabItem{
+                    Label("Stats", systemImage: "chart.xyaxis.line")
+                        .foregroundColor(.white)
+                }
+            RulesView()
+                .tabItem{
+                    Label("Rules", systemImage: "list.bullet")
+                }
         }
-        .padding()
+        .onAppear {
+            // Set the initial tab's label color to white
+            UITabBar.appearance().unselectedItemTintColor = .white
+        }
     }
 }
 
