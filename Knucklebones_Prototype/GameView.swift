@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameView: View {
+    @EnvironmentObject private var gameState: GameState
+    
     let lambAnimations = ["Lamb-dance", "Lamb-evil"]
     var randomAnimation: String {
         return lambAnimations.randomElement() ?? ""
@@ -28,13 +30,12 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .padding(.bottom, 60)
                     .padding(.leading, 110)
-                    
             }
             
             VStack {
                 Image("knucklebones")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 353, height: 136)
                 Spacer()
                 GIFImage(name: randomAnimation)
                     .frame(width: 245, height: 271)

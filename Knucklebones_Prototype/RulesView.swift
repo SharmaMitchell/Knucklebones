@@ -25,17 +25,18 @@ struct RulesView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 Spacer()
-                    .frame(height: 200)
+                    .frame(height: 130)
                 Image("eyes_bottom")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .padding(.bottom, 60)
+                    .padding(.leading, 110)
             }
             
             VStack {
                 Image("knucklebones")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                Spacer()
+                    .frame(width: 353, height: 136)
                 Text("Rules")
                     .font(Font.custom("Piazzolla", size: 36))
                     .fontWeight(.bold)
