@@ -12,10 +12,51 @@ struct GameView: View {
     
     @State private var showingDifficulty = false
     let difficultyOptions = ["Easy", "Hard"]
+    // TODO: Set lamb animation based on difficulty
+    //       Easy = dance, Hard = evil, defualt = idle
     
     let lambAnimations = ["Lamb-dance", "Lamb-evil"]
     var randomAnimation: String {
         return lambAnimations.randomElement() ?? ""
+    }
+    
+    @ViewBuilder
+    func landingScreen() -> some View {
+        VStack {
+            Image("knucklebones")
+                .resizable()
+                .frame(width: 353, height: 136)
+            Spacer()
+            GIFImage(name: randomAnimation)
+                .frame(width: 245, height: 271)
+            Spacer()
+            Image("play_button")
+                .resizable()
+                .frame(width: 250, height: 60)
+                .padding(.all, 5)
+            Image("difficulty_button")
+                .resizable()
+                .frame(width: 250, height: 60)
+                .padding(.all, 5)
+                .onTapGesture {
+                    showingDifficulty = true
+                }
+                .confirmationDialog("Choose Difficulty", isPresented: $showingDifficulty, titleVisibility: .visible) {
+                    ForEach(difficultyOptions, id: \.self) { difficulty in
+                        Button(difficulty) {
+                            gameState.gameDifficulty = difficulty
+                        }
+                    }
+                }
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func inGameScreen() -> some View {
+        VStack{
+            
+        }
     }
     
     var body: some View{
@@ -35,37 +76,13 @@ struct GameView: View {
                     .padding(.leading, 110)
             }
             
-            VStack {
-                Image("knucklebones")
-                    .resizable()
-                    .frame(width: 353, height: 136)
-                Spacer()
-                GIFImage(name: randomAnimation)
-                    .frame(width: 245, height: 271)
-                Spacer()
-                Image("play_button")
-                    .resizable()
-                    .frame(width: 250, height: 60)
-                    .padding(.all, 5)
-                Image("difficulty_button")
-                    .resizable()
-                    .frame(width: 250, height: 60)
-                    .padding(.all, 5)
-                    .onTapGesture {
-                        showingDifficulty = true
-                    }
-                    .confirmationDialog("Choose Difficulty", isPresented: $showingDifficulty, titleVisibility: .visible) {
-                        ForEach(difficultyOptions, id: \.self) { difficulty in
-                            Button(difficulty) {
-                                gameState.gameDifficulty = difficulty
-                            }
-                        }
-                    }
-                Spacer()
-                    
+            if(gameState.gameInProgress == false){
+                landingScreen()
+                .padding()
+            } else {
+                inGameScreen()
+                .padding()
             }
-
-            .padding()
         }
     }
 }
