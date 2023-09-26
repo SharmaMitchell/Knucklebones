@@ -10,6 +10,9 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject private var gameState: GameState
     
+    @State private var showingDifficulty = false
+    let difficultyOptions = ["Easy", "Hard"]
+    
     let lambAnimations = ["Lamb-dance", "Lamb-evil"]
     var randomAnimation: String {
         return lambAnimations.randomElement() ?? ""
@@ -48,6 +51,16 @@ struct GameView: View {
                     .resizable()
                     .frame(width: 250, height: 60)
                     .padding(.all, 5)
+                    .onTapGesture {
+                        showingDifficulty = true
+                    }
+                    .confirmationDialog("Choose Difficulty", isPresented: $showingDifficulty, titleVisibility: .visible) {
+                        ForEach(difficultyOptions, id: \.self) { difficulty in
+                            Button(difficulty) {
+                                gameState.gameDifficulty = difficulty
+                            }
+                        }
+                    }
                 Spacer()
                     
             }

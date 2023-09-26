@@ -11,6 +11,8 @@ class GameState: ObservableObject {
     @Published var p1board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
     @Published var p2board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
     
+    @Published var gameDifficulty: String = "Easy"
+    
     @Published var rolls: [Int] = Array(repeating: 0, count: 6)
     @Published var gamesWon: Int = 0
     @Published var gamesPlayed: Int = 0
