@@ -40,14 +40,14 @@ struct RulesView: View {
                 Text("Rules")
                     .font(Font.custom("Piazzolla", size: 36))
                     .fontWeight(.bold)
-                    .foregroundColor(Color(red: 245 / 255, green: 237 / 255, blue: 213 / 255))
+                    .foregroundColor(Color("TextColor"))
                 ForEach(rules, id: \.self) { rule in
                     Text(rule)
                         .font(Font.custom("Piazzolla", size: 16))
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
-                        .foregroundColor(Color(red: 245 / 255, green: 237 / 255, blue: 213 / 255))
+                        .foregroundColor(Color("TextColor"))
                         .padding(.all, 4)
                 }
                 Spacer()

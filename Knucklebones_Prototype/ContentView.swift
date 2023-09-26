@@ -9,7 +9,9 @@ import SwiftUI
 
 class GameState: ObservableObject {
     @Published var p1board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+    @Published var p1score: Int = 0
     @Published var p2board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+    @Published var p2score: Int = 0
     @Published var gameInProgress: Bool = false
     
     @Published var gameDifficulty: String = "Easy"

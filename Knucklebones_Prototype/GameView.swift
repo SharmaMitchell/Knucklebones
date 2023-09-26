@@ -53,6 +53,29 @@ struct GameView: View {
     }
     
     @ViewBuilder
+    func opponentPanel() -> some View {
+        HStack{
+            VStack{
+                Text("Ratau")
+                    .font(Font.custom("Piazzolla", size: 16))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundColor(Color("TextColor"))
+                Text("Score: \(gameState.p2score)")
+            }
+            // TODO: Add dice roll area & animation logic
+            //Image() // TODO: Add opponent Image
+        }
+    }
+    
+    @ViewBuilder
+    func playerBoard(isOpponent: Bool) -> some View {
+        // Board direction based on isOpponent (face upwards unless isOpponent)
+        
+    }
+    
+    @ViewBuilder
     func inGameScreen() -> some View {
         VStack{
             
