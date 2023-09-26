@@ -12,12 +12,11 @@ struct GameView: View {
     
     @State private var showingDifficulty = false
     let difficultyOptions = ["Easy", "Hard"]
-    // TODO: Set lamb animation based on difficulty
-    //       Easy = dance, Hard = evil, defualt = idle
     
     let lambAnimations = ["Lamb-dance", "Lamb-evil"]
-    var randomAnimation: String {
-        return lambAnimations.randomElement() ?? ""
+    var currentAnimation: String {
+        let animationIndex = difficultyOptions.firstIndex(of: gameState.gameDifficulty)!
+        return lambAnimations[animationIndex]
     }
     
     @ViewBuilder
@@ -27,7 +26,7 @@ struct GameView: View {
                 .resizable()
                 .frame(width: 353, height: 136)
             Spacer()
-            GIFImage(name: randomAnimation)
+            GIFImage(name: currentAnimation)
                 .frame(width: 245, height: 271)
             Spacer()
             Image("play_button")
@@ -67,8 +66,35 @@ struct GameView: View {
                     .foregroundColor(Color("TextColor"))
                 Text("Score: \(gameState.p2score)")
             }
+            
             // TODO: Add dice roll area & animation logic
+            
             //Image() // TODO: Add opponent Image
+        }
+    }
+    
+    @ViewBuilder
+    func playerPanel() -> some View {
+        VStack {
+            HStack {
+                
+            }
+            HStack {
+                Button("Quit"){
+                    gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+                    gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+                    gameState.p1score = 0
+                    gameState.p2score = 0
+                    gameState.gamesPlayed += 1
+                    gameState.gameInProgress = false
+                }
+                
+                //TODO: Add dice roll area & animation logic
+                
+                Button("Roll"){
+                    
+                }
+            }
         }
     }
     
@@ -81,7 +107,10 @@ struct GameView: View {
     @ViewBuilder
     func inGameScreen() -> some View {
         VStack{
-            
+            opponentPanel()
+            playerBoard(isOpponent: true)
+            playerBoard(isOpponent: false)
+            playerPanel()
         }
     }
     
