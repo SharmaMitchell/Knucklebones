@@ -34,6 +34,9 @@ struct GameView: View {
                 .resizable()
                 .frame(width: 250, height: 60)
                 .padding(.all, 5)
+                .onTapGesture {
+                    gameState.gameInProgress = true
+                }
             Image("difficulty_button")
                 .resizable()
                 .frame(width: 250, height: 60)
