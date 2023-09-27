@@ -120,6 +120,19 @@ struct GameView: View {
     func playerBoard(isOpponent: Bool) -> some View {
         
         VStack{
+            if (isOpponent == false) {
+                HStack {
+                    ForEach(0..<3, id: \.self) { col in
+                        let colSum = gameState.p1board[0][col] + gameState.p1board[1][col] + gameState.p1board[2][col]
+                        Text("\(colSum)")
+                            .font(Font.custom("Piazzolla", size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color("TextColor"))
+                            .frame(width: 60)
+                            .padding(.horizontal, 20)
+                    }
+                }
+            }
             ForEach(0..<3, id: \.self) { row in
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
@@ -132,6 +145,19 @@ struct GameView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 60, height: 60)
+                            .padding(.horizontal, 20)
+                    }
+                }
+            }
+            if (isOpponent == true) {
+                HStack {
+                    ForEach(0..<3, id: \.self) { col in
+                        let colSum = gameState.p2board[0][col] + gameState.p2board[1][col] + gameState.p2board[2][col]
+                        Text("\(colSum)")
+                            .font(Font.custom("Piazzolla", size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color("TextColor"))
+                            .frame(width: 60)
                             .padding(.horizontal, 20)
                     }
                 }
@@ -169,7 +195,7 @@ struct GameView: View {
             }
             
             if(gameState.gameInProgress == false){
-                landingScreen()
+                inGameScreen()
                 .padding()
             } else {
                 inGameScreen()
