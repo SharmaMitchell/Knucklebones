@@ -62,19 +62,32 @@ struct GameView: View {
     func opponentPanel() -> some View {
         HStack{
             VStack{
-                Text("Ratau")
-                    .font(Font.custom("Piazzolla", size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color("TextColor"))
-                Text("Score: \(gameState.p2score)")
-                    .font(Font.custom("Piazzolla", size: 16))
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color("TextColor"))
+                HStack {
+                    VStack{
+                        Spacer()
+                        Text("Ratau")
+                            .font(Font.custom("Piazzolla", size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color("TextColor"))
+                            .padding(.leading, 40)
+                    }
+                    Spacer()
+                    GIFImage(name: "Ratau-idle")
+                        .frame(width: 70, height: 70)
+                    Spacer()
+                    VStack{
+                        Spacer()
+                        Text("Score: \(gameState.p2score)")
+                            .font(Font.custom("Piazzolla", size: 16))
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color("TextColor"))
+                            .padding(.trailing, 40)
+                    }
+                }
             }
             
             // TODO: Add dice roll area & animation logic
             
-            //Image() // TODO: Add opponent Image
         }
     }
     
