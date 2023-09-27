@@ -19,7 +19,9 @@ struct GameView: View {
         return lambAnimations[animationIndex]
     }
     
-    @State private var isWhite = true
+    @State private var isWhite = false
+    @State private var isFlashing = false
+    @State private var previewDieInCol: [Int] = [-1, -1, -1]
     
     @ViewBuilder
     func landingScreen() -> some View {
@@ -98,12 +100,24 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
+                        isWhite = false
+                        isFlashing = false
                         gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
                         gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
                         gameState.p1score = 0
                         gameState.p2score = 0
+                        gameState.p1roll = -1
                         gameState.gamesPlayed += 1
-                        gameState.gameInProgress = false
+                        
+                        previewDieInCol[0] = -1
+                        previewDieInCol[1] = -1
+                        previewDieInCol[2] = -1
+                        
+                        
+                        // Small delay so app has time to reset state before exiting
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            gameState.gameInProgress = false
+                        }
                     }
                 
                 //TODO: Add dice roll area & animation logic
@@ -114,6 +128,25 @@ struct GameView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
+                    .onTapGesture {
+                        rollDie()
+                    }
+            }
+        }
+    }
+    
+    func rollDie() {
+        let randomRoll = Int.random(in: 1...6)
+        gameState.p1roll = randomRoll
+        
+    }
+    
+    func addDieToCol(col: Int, die: Int){
+        for i in 0..<3 {
+            if gameState.p1board[i][col] == 0 {
+                gameState.p1board[i][col] = die
+                print("done")
+                return
             }
         }
     }
@@ -150,31 +183,53 @@ struct GameView: View {
                                 // Reverse cols on opponent's board so they face the player
                                 let reversedCol = isOpponent ? 2 - col : col
                                 let value = isOpponent ? gameState.p2board[row][col] : gameState.p1board[row][reversedCol]
-                                let imageName = "\(value)_die"
                                 
-                                Image(imageName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 60, height: 60)
-                                    .padding(.horizontal, 20)
+                                if(value == 0 && isOpponent == false && gameState.p1roll != -1 && (previewDieInCol[col] == -1 || previewDieInCol[col] == row)){
+                                    let imageName = "\(gameState.p1roll)_die"
+                                    
+                                    Image(imageName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 60, height: 60)
+                                        .padding(.horizontal, 20)
+                                        .opacity(isWhite ? 0.8 : 0.15)
+                                        .onAppear(){
+                                            if(!isFlashing){
+                                                flash()
+                                                isFlashing = true
+                                            }
+                                            previewDieInCol[col] = row
+                                        }
+                                } else {
+                                    let imageName = "\(value)_die"
+                                    
+                                    Image(imageName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 60, height: 60)
+                                        .padding(.horizontal, 20)
+                                }
                             }
                         }
                     }
                 }
                 
-                if(gameState.p1roll == -1 && isOpponent == false){ // When player has a roll they have not placed
+                if(gameState.p1roll != -1 && isOpponent == false){ // When player has a roll they have not placed
                     HStack {
                         ForEach(0..<3, id: \.self) { col in
                             if gameState.p1board[2][col] == 0 {
                                 Color(.white)
-                                    .frame(width: 80)
-                                    .padding(.horizontal, 10)
-                                    .opacity(isWhite ? 0.3 : 0.15)
-                                    .onAppear(){
-                                        flash()
-                                    }
+                                    .frame(width: 60, height: 190)
+                                    .padding(.horizontal, 20)
+                                    .opacity(0.01)
                                     .onTapGesture {
-                                        print("tapped col \(col)")
+                                        print("hiu")
+                                        addDieToCol(col: col, die: gameState.p1roll)
+                                        gameState.p1roll = -1
+                                        previewDieInCol[0] = -1
+                                        previewDieInCol[1] = -1
+                                        previewDieInCol[2] = -1
+                                        isFlashing = false
                                     }
                             } else {
                                 Color(.white)
