@@ -19,6 +19,8 @@ struct GameView: View {
         return lambAnimations[animationIndex]
     }
     
+    @State private var isWhite = true
+    
     @ViewBuilder
     func landingScreen() -> some View {
         VStack {
@@ -31,14 +33,14 @@ struct GameView: View {
             Spacer()
             Image("play_button")
                 .resizable()
-                .frame(width: 250, height: 60)
+                .frame(width: 250, height: 80)
                 .padding(.all, 5)
                 .onTapGesture {
                     gameState.gameInProgress = true
                 }
             Image("difficulty_button")
                 .resizable()
-                .frame(width: 250, height: 60)
+                .frame(width: 250, height: 80)
                 .padding(.all, 5)
                 .onTapGesture {
                     showingDifficulty = true
@@ -116,6 +118,12 @@ struct GameView: View {
         }
     }
     
+    func flash() {
+        withAnimation(Animation.easeInOut(duration: 0.75).repeatForever()) {
+            isWhite.toggle()
+        }
+    }
+    
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
         
@@ -133,22 +141,54 @@ struct GameView: View {
                     }
                 }
             }
-            ForEach(0..<3, id: \.self) { row in
-                HStack {
-                    ForEach(0..<3, id: \.self) { col in
-                        // Reverse cols on opponent's board so they face the player
-                        let reversedCol = isOpponent ? 2 - col : col
-                        let value = isOpponent ? gameState.p2board[row][col] : gameState.p1board[row][reversedCol]
-                        let imageName = "\(value)_die"
-                        
-                        Image(imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height: 60)
-                            .padding(.horizontal, 20)
+            ZStack {
+                // board
+                VStack {
+                    ForEach(0..<3, id: \.self) { row in
+                        HStack {
+                            ForEach(0..<3, id: \.self) { col in
+                                // Reverse cols on opponent's board so they face the player
+                                let reversedCol = isOpponent ? 2 - col : col
+                                let value = isOpponent ? gameState.p2board[row][col] : gameState.p1board[row][reversedCol]
+                                let imageName = "\(value)_die"
+                                
+                                Image(imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 60, height: 60)
+                                    .padding(.horizontal, 20)
+                            }
+                        }
+                    }
+                }
+                
+                if(gameState.p1roll == -1 && isOpponent == false){ // When player has a roll they have not placed
+                    HStack {
+                        ForEach(0..<3, id: \.self) { col in
+                            if gameState.p1board[2][col] == 0 {
+                                Color(.white)
+                                    .frame(width: 80)
+                                    .padding(.horizontal, 10)
+                                    .opacity(isWhite ? 0.3 : 0.15)
+                                    .onAppear(){
+                                        flash()
+                                    }
+                                    .onTapGesture {
+                                        print("tapped col \(col)")
+                                    }
+                            } else {
+                                Color(.white)
+                                    .frame(width: 80)
+                                    .padding(.horizontal, 10)
+                                    .opacity(.zero)
+                                    .ignoresSafeArea()
+                            }
+                            
+                        }
                     }
                 }
             }
+            
             if (isOpponent == true) {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
@@ -195,7 +235,7 @@ struct GameView: View {
             }
             
             if(gameState.gameInProgress == false){
-                inGameScreen()
+                landingScreen()
                 .padding()
             } else {
                 inGameScreen()
