@@ -60,11 +60,12 @@ struct GameView: View {
             VStack{
                 Text("Ratau")
                     .font(Font.custom("Piazzolla", size: 16))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .fontWeight(.semibold)
                     .foregroundColor(Color("TextColor"))
                 Text("Score: \(gameState.p2score)")
+                    .font(Font.custom("Piazzolla", size: 16))
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color("TextColor"))
             }
             
             // TODO: Add dice roll area & animation logic
@@ -77,31 +78,65 @@ struct GameView: View {
     func playerPanel() -> some View {
         VStack {
             HStack {
-                
+                Text("The Lamb")
+                    .font(Font.custom("Piazzolla", size: 16))
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color("TextColor"))
+                    .padding(.leading, 40)
+                Spacer()
+                Text("Score: \(gameState.p1score)")
+                    .font(Font.custom("Piazzolla", size: 16))
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color("TextColor"))
+                    .padding(.trailing, 40)
             }
             HStack {
-                Button("Quit"){
-                    gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
-                    gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
-                    gameState.p1score = 0
-                    gameState.p2score = 0
-                    gameState.gamesPlayed += 1
-                    gameState.gameInProgress = false
-                }
+                Image("quit_button")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 110, height: 60)
+                    .onTapGesture {
+                        gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+                        gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
+                        gameState.p1score = 0
+                        gameState.p2score = 0
+                        gameState.gamesPlayed += 1
+                        gameState.gameInProgress = false
+                    }
                 
                 //TODO: Add dice roll area & animation logic
+                Spacer()
+                    .frame(width: 60)
                 
-                Button("Roll"){
-                    
-                }
+                Image("roll_button_2")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 110, height: 60)
             }
         }
     }
     
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
-        // Board direction based on isOpponent (face upwards unless isOpponent)
         
+        VStack{
+            ForEach(0..<3, id: \.self) { row in
+                HStack {
+                    ForEach(0..<3, id: \.self) { col in
+                        // Reverse cols on opponent's board so they face the player
+                        let reversedCol = isOpponent ? 2 - col : col
+                        let value = isOpponent ? gameState.p2board[row][col] : gameState.p1board[row][reversedCol]
+                        let imageName = "\(value)_die"
+                        
+                        Image(imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 60, height: 60)
+                            .padding(.horizontal, 20)
+                    }
+                }
+            }
+        }
     }
     
     @ViewBuilder
@@ -109,6 +144,8 @@ struct GameView: View {
         VStack{
             opponentPanel()
             playerBoard(isOpponent: true)
+            Spacer()
+                .frame(height: 20)
             playerBoard(isOpponent: false)
             playerPanel()
         }
