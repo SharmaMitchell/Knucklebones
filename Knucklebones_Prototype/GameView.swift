@@ -158,7 +158,6 @@ struct GameView: View {
         for i in 0..<3 {
             if gameState.p1board[i][col] == 0 {
                 gameState.p1board[i][col] = die
-                print("done")
                 return
             }
         }
@@ -170,6 +169,59 @@ struct GameView: View {
         }
     }
     
+    func twoInCol(num: Int, col: Int, isOpponent: Bool) -> Bool {
+        let board = isOpponent ? gameState.p2board : gameState.p1board
+        
+        if num == 0 {
+            return false
+        }
+
+        for row in 0..<3 {
+            if board[row][col] == num {
+                for otherRow in (row + 1)..<3 {
+                    if board[otherRow][col] == num {
+                        return true
+                    }
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func threeInCol(col: Int, isOpponent: Bool) -> Bool{
+        if !isOpponent {
+            if gameState.p1board[2][col] == 0 {
+                return false
+            }
+            return gameState.p1board[0][col] == gameState.p1board[1][col] && gameState.p1board[1][col] == gameState.p1board[2][col]
+        }
+        if gameState.p2board[2][col] == 0 {
+            return false
+        }
+        
+        return gameState.p2board[0][col] == gameState.p2board[1][col] && gameState.p2board[1][col] == gameState.p2board[2][col]
+    }
+    
+    func calculateColSum(colNums: [Int]) -> Int {
+        if colNums[0] == colNums[1] && colNums[1] == colNums[2] {
+            // All three numbers are the same, triple the value
+            return colNums[0] * 9
+        } else if colNums[0] == colNums[1] {
+            // Two numbers are the same, double the value
+            return colNums[2] + (colNums[0] * 4)
+        } else if colNums[0] == colNums[2] {
+            // Two numbers are the same, double the value
+            return colNums[1] + (colNums[2] * 4)
+        } else if colNums[1] == colNums[2] {
+            // Two numbers are the same, double the value
+            return colNums[0] + (colNums[1] * 4)
+        } else {
+            // All numbers are distinct, sum them up
+            return colNums.reduce(0, +)
+        }
+    }
+    
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
         
@@ -177,7 +229,9 @@ struct GameView: View {
             if (isOpponent == false) {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
-                        let colSum = gameState.p1board[0][col] + gameState.p1board[1][col] + gameState.p1board[2][col]
+                        let colNums = [gameState.p1board[0][col], gameState.p1board[1][col], gameState.p1board[2][col]]
+                        let colSum = calculateColSum(colNums: colNums)
+                        
                         Text("\(colSum)")
                             .font(Font.custom("Piazzolla", size: 16))
                             .fontWeight(.semibold)
@@ -214,7 +268,10 @@ struct GameView: View {
                                             previewDieInCol[col] = row
                                         }
                                 } else {
-                                    let imageName = "\(value)_die"
+                                    let is3match = threeInCol(col: col, isOpponent: isOpponent)
+                                    let is2match = twoInCol(num: value, col: col, isOpponent: isOpponent)
+                                    let imageName = "\(value)_die\(is3match ? "_blue" : (is2match ? "_yellow" : ""))"
+                                    
                                     
                                     Image(imageName)
                                         .resizable()
@@ -236,7 +293,6 @@ struct GameView: View {
                                     .padding(.horizontal, 20)
                                     .opacity(0.01)
                                     .onTapGesture {
-                                        print("hiu")
                                         addDieToCol(col: col, die: gameState.p1roll)
                                         gameState.p1roll = -1
                                         previewDieInCol[0] = -1
