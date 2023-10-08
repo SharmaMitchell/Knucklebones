@@ -261,11 +261,14 @@ struct GameView: View {
     func resetGame() {
         isWhite = false
         isFlashing = false
+        gameState.isP1Turn = true
+        gameState.p1roll = -1
+        gameState.p2roll = -1
         gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
         gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
         gameState.p1score = [0,0,0]
         gameState.p2score = [0,0,0]
-        gameState.p1roll = -1
+        
         gameState.gamesPlayed += 1
         
         previewDieInCol[0] = -1
