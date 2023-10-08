@@ -14,8 +14,10 @@ class GameState: ObservableObject {
     
     @Published var p2board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
     @Published var p2score: Int = 0
+    @Published var p2roll: Int = -1
     
     @Published var gameInProgress: Bool = false
+    @Published var isP1Turn: Bool = true
     
     @Published var gameDifficulty: String = "Easy"
     

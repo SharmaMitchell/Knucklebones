@@ -19,9 +19,12 @@ struct GameView: View {
         return lambAnimations[animationIndex]
     }
     
+    
     @State private var isWhite = false
     @State private var isFlashing = false
     @State private var previewDieInCol: [Int] = [-1, -1, -1]
+    
+    @State private var opponentAnimation = "Ratau-idle"
     
     @ViewBuilder
     func landingScreen() -> some View {
@@ -72,7 +75,7 @@ struct GameView: View {
                             .padding(.leading, 40)
                     }
                     Spacer()
-                    GIFImage(name: "Ratau-idle")
+                    GIFImage(name: opponentAnimation)
                         .frame(width: 70, height: 70)
                     Spacer()
                     VStack{
@@ -142,16 +145,21 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
-                        rollDie()
+                        if(gameState.isP1Turn){
+                            rollDie(isOpponent: false)
+                        }
                     }
             }
         }
     }
     
-    func rollDie() {
+    func rollDie(isOpponent: Bool) {
         let randomRoll = Int.random(in: 1...6)
+        if(isOpponent == true){
+            gameState.p2roll = randomRoll
+            return
+        }
         gameState.p1roll = randomRoll
-        
     }
     
     func addDieToCol(col: Int, die: Int){
@@ -222,6 +230,47 @@ struct GameView: View {
         }
     }
     
+    func opponentTurn() {
+        print("Starting opponentTurn")
+        opponentAnimation = "Ratau-roll"
+        rollDie(isOpponent: true)
+        var possibleCols = [0, 1, 2]
+        var randomCol = possibleCols.randomElement() ?? -1
+        while(gameState.p2board[2][randomCol] != 0 && possibleCols.count > 0){
+            possibleCols.removeAll {$0 == randomCol}
+            randomCol = possibleCols.randomElement()!
+        }
+        if(randomCol == -1){
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            print("Inside asyncAfter closure")
+            print("randomCol: \(randomCol), roll: \(gameState.p2roll)")
+            // Check if randomCol is within bounds
+            if randomCol >= 0 && randomCol < gameState.p2board[0].count {
+                // place opponent die
+                if (gameState.p2board[0][randomCol] == 0){
+                    gameState.p2board[0][randomCol] = gameState.p2roll
+                } else if (gameState.p2board[1][randomCol] == 0){
+                    gameState.p2board[1][randomCol] = gameState.p2roll
+                } else if (gameState.p2board[2][randomCol] == 0){
+                    gameState.p2board[2][randomCol] = gameState.p2roll
+                }
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // reset opponent animation
+            opponentAnimation = "Ratau-idle"
+
+            // player turn
+            gameState.p2roll = -1
+            gameState.isP1Turn = true
+        }
+        print(gameState.p2board)
+        print("Exiting opponentTurn")
+    }
+
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
         
@@ -295,10 +344,13 @@ struct GameView: View {
                                     .onTapGesture {
                                         addDieToCol(col: col, die: gameState.p1roll)
                                         gameState.p1roll = -1
+                                        gameState.isP1Turn = false
                                         previewDieInCol[0] = -1
                                         previewDieInCol[1] = -1
                                         previewDieInCol[2] = -1
                                         isFlashing = false
+                                        
+                                        opponentTurn()
                                     }
                             } else {
                                 Color(.white)
