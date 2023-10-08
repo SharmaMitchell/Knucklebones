@@ -49,6 +49,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2E1E5F22AD33A5900F9526B /* gifs */ = {
+			isa = PBXGroup;
+			children = (
+				A281BEA92AC3E429001B3779 /* Ratau-idle.gif */,
+				A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */,
+				A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */,
+			);
+			path = gifs;
+			sourceTree = "<group>";
+		};
 		A2F1A5D22ABFDA6F00EE164D = {
 			isa = PBXGroup;
 			children = (
@@ -68,16 +78,14 @@
 		A2F1A5DD2ABFDA6F00EE164D /* Knucklebones_Prototype */ = {
 			isa = PBXGroup;
 			children = (
+				A2E1E5F22AD33A5900F9526B /* gifs */,
 				A2F1A60A2ABFF09D00EE164D /* Knucklebones-Prototype-Info.plist */,
 				A2F1A6052ABFEFEB00EE164D /* Font */,
 				A2F1A5DE2ABFDA6F00EE164D /* Knucklebones_PrototypeApp.swift */,
 				A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */,
 				A2F1A5F52ABFE60D00EE164D /* GameView.swift */,
-				A281BEA92AC3E429001B3779 /* Ratau-idle.gif */,
 				A2F1A5F72ABFE75500EE164D /* StatsView.swift */,
 				A2F1A5F92ABFE76F00EE164D /* RulesView.swift */,
-				A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */,
-				A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */,
 				A2F1A5F32ABFE3F800EE164D /* GIFImage.swift */,
 				A2F1A5E22ABFDA7000EE164D /* Assets.xcassets */,
 				A2F1A5E42ABFDA7000EE164D /* Preview Content */,
