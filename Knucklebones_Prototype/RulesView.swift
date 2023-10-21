@@ -48,7 +48,8 @@ struct RulesView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(Color("TextColor"))
-                        .padding(.all, 4)
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 1)
                 }
                 Spacer()
                     
