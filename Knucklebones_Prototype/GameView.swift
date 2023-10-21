@@ -128,7 +128,7 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
-                        if gameState.isP1Turn {
+                        if gameState.isP1Turn && gameState.p1roll == -1{
                             rollDie(isOpponent: false)
                         }
                     }
