@@ -51,6 +51,7 @@ struct ContentView: View {
             // Set the initial tab's label color to white
             UITabBar.appearance().unselectedItemTintColor = .white
         }
+        .preferredColorScheme(.dark)
     }
 }
 

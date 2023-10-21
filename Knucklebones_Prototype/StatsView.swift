@@ -48,6 +48,9 @@ struct StatsView: View {
                     .padding(.leading, 110)
             }
 
+            Color.pink.opacity(0.075)
+                .edgesIgnoringSafeArea(.all)
+
             VStack {
                 Image("knucklebones")
                     .resizable()

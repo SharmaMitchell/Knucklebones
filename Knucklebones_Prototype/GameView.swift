@@ -40,7 +40,9 @@ struct GameView: View {
                 .frame(width: 250, height: 80)
                 .padding(.all, 5)
                 .onTapGesture {
-                    gameState.gameInProgress = true
+                    withAnimation {
+                        gameState.gameInProgress = true
+                    }
                 }
             Image("difficulty_button")
                 .resizable()
@@ -276,7 +278,9 @@ struct GameView: View {
         
         // Small delay so app has time to reset state before exiting
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            gameState.gameInProgress = false
+            withAnimation {
+                gameState.gameInProgress = false
+            }
         }
     }
 
@@ -431,7 +435,19 @@ struct GameView: View {
                     .padding(.bottom, 60)
                     .padding(.leading, 110)
             }
-
+            
+            VStack {
+                if !gameState.gameInProgress {
+                    LinearGradient(gradient: Gradient(colors: [Color.pink.opacity(0.2), Color.pink.opacity(0.075)]),
+                                   startPoint: .top, endPoint: .bottom)
+                        .edgesIgnoringSafeArea(.all)
+                } else {
+                    LinearGradient(gradient: Gradient(colors: [Color.pink.opacity(0.075), Color.pink.opacity(0.075)]),
+                                   startPoint: .top, endPoint: .bottom)
+                        .edgesIgnoringSafeArea(.all)
+                }
+            }.animation(.easeOut, value: 0)
+            
             if gameState.gameInProgress == false {
                 landingScreen()
                     .padding()
