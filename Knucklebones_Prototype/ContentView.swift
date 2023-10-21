@@ -9,18 +9,18 @@ import SwiftUI
 
 class GameState: ObservableObject {
     @Published var p1board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
-    @Published var p1score: [Int] = [0,0,0]
+    @Published var p1score: [Int] = [0, 0, 0]
     @Published var p1roll: Int = -1
-    
+
     @Published var p2board: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
-    @Published var p2score: [Int] = [0,0,0]
+    @Published var p2score: [Int] = [0, 0, 0]
     @Published var p2roll: Int = -1
-    
+
     @Published var gameInProgress: Bool = false
     @Published var isP1Turn: Bool = true
-    
+
     @Published var gameDifficulty: String = "Easy"
-    
+
     @Published var rolls: [Int] = Array(repeating: 0, count: 6)
     @Published var gamesWon: Int = 0
     @Published var gamesPlayed: Int = 0
@@ -28,22 +28,22 @@ class GameState: ObservableObject {
 
 struct ContentView: View {
     @StateObject private var gameState = GameState()
-    
+
     var body: some View {
-        TabView{
+        TabView {
             GameView()
                 .environmentObject(gameState)
-                .tabItem{
+                .tabItem {
                     Label("Game", systemImage: "dice")
                 }
             StatsView()
                 .environmentObject(gameState)
-                .tabItem{
+                .tabItem {
                     Label("Stats", systemImage: "chart.xyaxis.line")
                         .foregroundColor(.white)
                 }
             RulesView()
-                .tabItem{
+                .tabItem {
                     Label("Rules", systemImage: "list.bullet")
                 }
         }

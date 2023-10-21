@@ -15,12 +15,12 @@ struct RulesView: View {
         "If you place a die of the same value as your opponents die in the same column, all matching dice in your opponent’s column are destroyed. You can use this mechanic to destroy your opponent’s high-scoring combos.",
         "The game ends when either player completely fills up their 3x3 board. The player with the higher score wins."
     ]
-    
-    var body: some View{
+
+    var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // Set the background to black
-            
-            VStack{
+
+            VStack {
                 Image("eyes_top")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -32,7 +32,7 @@ struct RulesView: View {
                     .padding(.bottom, 60)
                     .padding(.leading, 110)
             }
-            
+
             VStack {
                 Image("knucklebones")
                     .resizable()
@@ -49,12 +49,9 @@ struct RulesView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(Color("TextColor"))
                         .padding(.horizontal, 4)
-                        .padding(.vertical, 1)
+                        .padding(.bottom, 2)
                 }
                 Spacer()
-                    
-                    
-                    
             }
 
             .padding()

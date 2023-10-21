@@ -19,7 +19,6 @@ struct GameView: View {
         return lambAnimations[animationIndex]
     }
     
-    
     @State private var isWhite = false
     @State private var isFlashing = false
     @State private var previewDieInCol: [Int] = [-1, -1, -1]
@@ -63,10 +62,10 @@ struct GameView: View {
     
     @ViewBuilder
     func opponentPanel() -> some View {
-        HStack{
-            VStack{
+        HStack {
+            VStack {
                 HStack {
-                    VStack{
+                    VStack {
                         Spacer()
                         Text("Ratau")
                             .font(Font.custom("Piazzolla", size: 16))
@@ -78,7 +77,7 @@ struct GameView: View {
                     GIFImage(name: opponentAnimation)
                         .frame(width: 70, height: 70)
                     Spacer()
-                    VStack{
+                    VStack {
                         Spacer()
                         Text("Score: \(gameState.p2score.reduce(0, +))")
                             .font(Font.custom("Piazzolla", size: 16))
@@ -90,7 +89,6 @@ struct GameView: View {
             }
             
             // TODO: Add dice roll area & animation logic
-            
         }
     }
     
@@ -119,7 +117,7 @@ struct GameView: View {
                         resetGame()
                     }
                 
-                //TODO: Add dice roll area & animation logic
+                // TODO: Add dice roll area & animation logic
                 Spacer()
                     .frame(width: 60)
                 
@@ -128,7 +126,7 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
-                        if(gameState.isP1Turn){
+                        if gameState.isP1Turn {
                             rollDie(isOpponent: false)
                         }
                     }
@@ -137,15 +135,16 @@ struct GameView: View {
     }
     
     func rollDie(isOpponent: Bool) {
-        let randomRoll = Int.random(in: 1...6)
-        if(isOpponent == true){
+        let randomRoll = Int.random(in: 1 ... 6)
+        if isOpponent == true {
             gameState.p2roll = randomRoll
             return
         }
         gameState.p1roll = randomRoll
+        gameState.rolls[randomRoll - 1] += 1
     }
     
-    func addDieToCol(col: Int, die: Int){
+    func addDieToCol(col: Int, die: Int) {
         for i in 0..<3 {
             if gameState.p1board[i][col] == 0 {
                 gameState.p1board[i][col] = die
@@ -180,7 +179,7 @@ struct GameView: View {
         return false
     }
     
-    func threeInCol(col: Int, isOpponent: Bool) -> Bool{
+    func threeInCol(col: Int, isOpponent: Bool) -> Bool {
         if !isOpponent {
             if gameState.p1board[2][col] == 0 {
                 return false
@@ -219,11 +218,11 @@ struct GameView: View {
         rollDie(isOpponent: true)
         var possibleCols = [0, 1, 2]
         var randomCol = possibleCols.randomElement() ?? -1
-        while(gameState.p2board[2][randomCol] != 0 && possibleCols.count > 0){
-            possibleCols.removeAll {$0 == randomCol}
+        while gameState.p2board[2][randomCol] != 0 && possibleCols.count > 0 {
+            possibleCols.removeAll { $0 == randomCol }
             randomCol = possibleCols.randomElement()!
         }
-        if(randomCol == -1){
+        if randomCol == -1 {
             return
         }
         
@@ -233,11 +232,11 @@ struct GameView: View {
             // Check if randomCol is within bounds
             if randomCol >= 0 && randomCol < gameState.p2board[0].count {
                 // place opponent die
-                if (gameState.p2board[0][randomCol] == 0){
+                if gameState.p2board[0][randomCol] == 0 {
                     gameState.p2board[0][randomCol] = gameState.p2roll
-                } else if (gameState.p2board[1][randomCol] == 0){
+                } else if gameState.p2board[1][randomCol] == 0 {
                     gameState.p2board[1][randomCol] = gameState.p2roll
-                } else if (gameState.p2board[2][randomCol] == 0){
+                } else if gameState.p2board[2][randomCol] == 0 {
                     gameState.p2board[2][randomCol] = gameState.p2roll
                 }
             }
@@ -266,15 +265,14 @@ struct GameView: View {
         gameState.p2roll = -1
         gameState.p1board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
         gameState.p2board = Array(repeating: Array(repeating: 0, count: 3), count: 3)
-        gameState.p1score = [0,0,0]
-        gameState.p2score = [0,0,0]
+        gameState.p1score = [0, 0, 0]
+        gameState.p2score = [0, 0, 0]
         
         gameState.gamesPlayed += 1
         
         previewDieInCol[0] = -1
         previewDieInCol[1] = -1
         previewDieInCol[2] = -1
-        
         
         // Small delay so app has time to reset state before exiting
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
@@ -284,9 +282,8 @@ struct GameView: View {
 
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
-        
-        VStack{
-            if (isOpponent == false) {
+        VStack {
+            if isOpponent == false {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
 //                        let colNums = [gameState.p1board[0][col], gameState.p1board[1][col], gameState.p1board[2][col]]
@@ -313,7 +310,7 @@ struct GameView: View {
                                 
                                 let value = isOpponent ? gameState.p2board[reversedRow][col] : gameState.p1board[row][col]
                                 
-                                if(value == 0 && isOpponent == false && gameState.p1roll != -1 && (previewDieInCol[col] == -1 || previewDieInCol[col] == row)){
+                                if value == 0 && isOpponent == false && gameState.p1roll != -1 && (previewDieInCol[col] == -1 || previewDieInCol[col] == row) {
                                     let imageName = "\(gameState.p1roll)_die"
                                     
                                     Image(imageName)
@@ -322,19 +319,17 @@ struct GameView: View {
                                         .frame(width: 60, height: 60)
                                         .padding(.horizontal, 20)
                                         .opacity(isWhite ? 0.8 : 0.15)
-                                        .onAppear(){
-                                            if(!isFlashing){
+                                        .onAppear {
+                                            if !isFlashing {
                                                 flash()
                                                 isFlashing = true
                                             }
                                             previewDieInCol[col] = row
-                                            
                                         }
                                 } else {
                                     let is3match = threeInCol(col: col, isOpponent: isOpponent)
                                     let is2match = twoInCol(num: value, col: col, isOpponent: isOpponent)
                                     let imageName = "\(value)_die\(is3match ? "_blue" : (is2match ? "_yellow" : ""))"
-                                    
                                     
                                     Image(imageName)
                                         .resizable()
@@ -347,7 +342,7 @@ struct GameView: View {
                     }
                 }
                 
-                if(gameState.p1roll != -1 && isOpponent == false){ // When player has a roll they have not placed
+                if gameState.p1roll != -1 && isOpponent == false { // When player has a roll they have not placed
                     HStack {
                         ForEach(0..<3, id: \.self) { col in
                             if gameState.p1board[2][col] == 0 {
@@ -369,9 +364,10 @@ struct GameView: View {
                                         gameState.p1score[col] = calculateColSum(colNums: colNums)
                                         
                                         // if board is full, calculate winner
-                                        if(gameState.p1board[2][0] != 0 &&
-                                           gameState.p1board[2][1] != 0 &&
-                                           gameState.p1board[2][2] != 0){
+                                        if gameState.p1board[2][0] != 0 &&
+                                            gameState.p1board[2][1] != 0 &&
+                                            gameState.p1board[2][2] != 0
+                                        {
                                             // TODO: Implement game winner screen
                                             print("game over")
                                             resetGame()
@@ -386,13 +382,12 @@ struct GameView: View {
                                     .opacity(.zero)
                                     .ignoresSafeArea()
                             }
-                            
                         }
                     }
                 }
             }
             
-            if (isOpponent == true) {
+            if isOpponent == true {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
                         let colSum = gameState.p2board[0][col] + gameState.p2board[1][col] + gameState.p2board[2][col]
@@ -410,7 +405,7 @@ struct GameView: View {
     
     @ViewBuilder
     func inGameScreen() -> some View {
-        VStack{
+        VStack {
             opponentPanel()
             playerBoard(isOpponent: true)
             Spacer()
@@ -420,11 +415,11 @@ struct GameView: View {
         }
     }
     
-    var body: some View{
+    var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // Set the background to black
             
-            VStack{
+            VStack {
                 Image("eyes_top")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -436,13 +431,13 @@ struct GameView: View {
                     .padding(.bottom, 60)
                     .padding(.leading, 110)
             }
-            
-            if(gameState.gameInProgress == false){
+
+            if gameState.gameInProgress == false {
                 landingScreen()
-                .padding()
+                    .padding()
             } else {
                 inGameScreen()
-                .padding()
+                    .padding()
             }
         }
     }
