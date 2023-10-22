@@ -10,7 +10,6 @@
 		A281BEAA2AC3E429001B3779 /* Ratau-idle.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEA92AC3E429001B3779 /* Ratau-idle.gif */; };
 		A281BEAC2AC3E479001B3779 /* Lamb-evil.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */; };
 		A281BEAE2AC3E483001B3779 /* Lamb-dance.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */; };
-		A2E1E5F42AD3472200F9526B /* Ratau-roll.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2E1E5F32AD3472200F9526B /* Ratau-roll.gif */; };
 		A2F1A5DF2ABFDA6F00EE164D /* Knucklebones_PrototypeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5DE2ABFDA6F00EE164D /* Knucklebones_PrototypeApp.swift */; };
 		A2F1A5E12ABFDA6F00EE164D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */; };
 		A2F1A5E32ABFDA7000EE164D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A5E22ABFDA7000EE164D /* Assets.xcassets */; };
@@ -20,13 +19,13 @@
 		A2F1A5F82ABFE75500EE164D /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F72ABFE75500EE164D /* StatsView.swift */; };
 		A2F1A5FA2ABFE76F00EE164D /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F1A5F92ABFE76F00EE164D /* RulesView.swift */; };
 		A2F1A6092ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2F1A6082ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf */; };
+		A2F7EB152AE4A3E200A293B1 /* Ratau-roll.gif in Resources */ = {isa = PBXBuildFile; fileRef = A2F7EB142AE4A3E200A293B1 /* Ratau-roll.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A281BEA92AC3E429001B3779 /* Ratau-idle.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Ratau-idle.gif"; sourceTree = "<group>"; };
 		A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-evil.gif"; sourceTree = "<group>"; };
 		A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-dance.gif"; sourceTree = "<group>"; };
-		A2E1E5F32AD3472200F9526B /* Ratau-roll.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Ratau-roll.gif"; path = "../../../../../Downloads/Ratau-roll.gif"; sourceTree = "<group>"; };
 		A2F1A5DB2ABFDA6F00EE164D /* Knucklebones_Prototype.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Knucklebones_Prototype.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2F1A5DE2ABFDA6F00EE164D /* Knucklebones_PrototypeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knucklebones_PrototypeApp.swift; sourceTree = "<group>"; };
 		A2F1A5E02ABFDA6F00EE164D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 		A2F1A5F92ABFE76F00EE164D /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		A2F1A6082ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Piazzolla-VariableFont_opsz,wght.ttf"; sourceTree = "<group>"; };
 		A2F1A60A2ABFF09D00EE164D /* Knucklebones-Prototype-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Knucklebones-Prototype-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A2F7EB142AE4A3E200A293B1 /* Ratau-roll.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Ratau-roll.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				A281BEA92AC3E429001B3779 /* Ratau-idle.gif */,
-				A2E1E5F32AD3472200F9526B /* Ratau-roll.gif */,
+				A2F7EB142AE4A3E200A293B1 /* Ratau-roll.gif */,
 				A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */,
 				A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */,
 			);
@@ -170,7 +170,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2E1E5F42AD3472200F9526B /* Ratau-roll.gif in Resources */,
+				A2F7EB152AE4A3E200A293B1 /* Ratau-roll.gif in Resources */,
 				A281BEAA2AC3E429001B3779 /* Ratau-idle.gif in Resources */,
 				A2F1A5E62ABFDA7000EE164D /* Preview Assets.xcassets in Resources */,
 				A281BEAE2AC3E483001B3779 /* Lamb-dance.gif in Resources */,
