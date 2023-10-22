@@ -374,6 +374,13 @@ struct GameView: View {
                                         {
                                             // TODO: Implement game winner screen
                                             print("game over")
+                                            if (gameState.p1score.reduce(0, +) > gameState.p2score.reduce(0, +)){
+                                                // player won
+                                                gameState.gamesWon += 1
+                                            } else {
+                                                // opponent won
+                                                
+                                            }
                                             resetGame()
                                         } else {
                                             opponentTurn()
