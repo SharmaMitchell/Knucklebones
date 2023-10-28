@@ -10,6 +10,8 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject private var gameState: GameState
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+    
     @State private var showingDifficulty = false
     let difficultyOptions = ["Easy", "Hard"]
     
@@ -26,15 +28,8 @@ struct GameView: View {
     @State private var opponentAnimation = "Ratau-idle"
     
     @ViewBuilder
-    func landingScreen() -> some View {
-        VStack {
-            Image("knucklebones")
-                .resizable()
-                .frame(width: 353, height: 136)
-            Spacer()
-            GIFImage(name: currentAnimation)
-                .frame(width: 245, height: 271)
-            Spacer()
+    func landingScreenButtons() -> some View {
+        VStack{
             Image("play_button")
                 .resizable()
                 .frame(width: 250, height: 80)
@@ -58,8 +53,41 @@ struct GameView: View {
                         }
                     }
                 }
-            Spacer()
         }
+    }
+    
+    @ViewBuilder
+    func landingScreen() -> some View {
+        if(verticalSizeClass == .regular){
+            VStack {
+                Image("knucklebones")
+                    .resizable()
+                    .frame(width: 353, height: 136)
+                Spacer()
+                GIFImage(name: currentAnimation)
+                    .frame(width: 245, height: 271)
+                Spacer()
+                landingScreenButtons()
+                Spacer()
+            }
+        } else {
+            VStack {
+                Image("knucklebones")
+                    .resizable()
+                    .frame(width: 353, height: 136)
+                Spacer()
+                HStack{
+                    Spacer()
+                    GIFImage(name: currentAnimation)
+                        .frame(width: 200, height: 200)
+                    Spacer()
+                    landingScreenButtons()
+                    Spacer()
+                }
+                
+            }
+        }
+        
     }
     
     @ViewBuilder
