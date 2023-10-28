@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RulesView: View {
+    @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
+
     let rules = [
         "The game consists of two 3x3 boards. One belongs to you (the lamb), and the other belongs to your opponent.",
         "Each turn, you roll a 6-sided die, and must place it in a column on your board.",
@@ -37,23 +39,33 @@ struct RulesView: View {
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
-                Image("knucklebones")
-                    .resizable()
-                    .frame(width: 353, height: 136)
-                Text("Rules")
-                    .font(Font.custom("Piazzolla", size: 36))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color("TextColor"))
-                ForEach(rules, id: \.self) { rule in
-                    Text(rule)
-                        .font(Font.custom("Piazzolla", size: 16))
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .foregroundColor(Color("TextColor"))
-                        .padding(.horizontal, 4)
-                        .padding(.bottom, 2)
+                if verticalSizeClass == .regular {
+                    Image("knucklebones")
+                        .resizable()
+                        .frame(width: 353, height: 136)
+                } else {
+                    Image("knucklebones")
+                        .resizable()
+                        .frame(width: 235, height: 90)
                 }
+
+                ScrollView {
+                    Text("Rules")
+                        .font(Font.custom("Piazzolla", size: 36))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("TextColor"))
+                    ForEach(rules, id: \.self) { rule in
+                        Text(rule)
+                            .font(Font.custom("Piazzolla", size: 16))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .foregroundColor(Color("TextColor"))
+                            .padding(.horizontal, 4)
+                            .padding(.bottom, 2)
+                    }
+                }
+
                 Spacer()
             }
 
