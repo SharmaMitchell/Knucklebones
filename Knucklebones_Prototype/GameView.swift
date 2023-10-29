@@ -29,7 +29,7 @@ struct GameView: View {
     
     @ViewBuilder
     func landingScreenButtons() -> some View {
-        VStack{
+        VStack {
             Image("play_button")
                 .resizable()
                 .frame(width: 250, height: 80)
@@ -58,7 +58,7 @@ struct GameView: View {
     
     @ViewBuilder
     func landingScreen() -> some View {
-        if(verticalSizeClass == .regular){
+        if verticalSizeClass == .regular {
             VStack {
                 Image("knucklebones")
                     .resizable()
@@ -76,7 +76,7 @@ struct GameView: View {
                     .resizable()
                     .frame(width: 353, height: 136)
                 Spacer()
-                HStack{
+                HStack {
                     Spacer()
                     GIFImage(name: currentAnimation)
                         .frame(width: 200, height: 200)
@@ -84,10 +84,8 @@ struct GameView: View {
                     landingScreenButtons()
                     Spacer()
                 }
-                
             }
         }
-        
     }
     
     @ViewBuilder
@@ -117,8 +115,6 @@ struct GameView: View {
                     }
                 }
             }
-            
-            // TODO: Add dice roll area & animation logic
         }
     }
     
@@ -147,7 +143,6 @@ struct GameView: View {
                         resetGame()
                     }
                 
-                // TODO: Add dice roll area & animation logic
                 Spacer()
                     .frame(width: 60)
                 
@@ -156,7 +151,7 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
-                        if gameState.isP1Turn && gameState.p1roll == -1{
+                        if gameState.isP1Turn && gameState.p1roll == -1 {
                             rollDie(isOpponent: false)
                         }
                     }
@@ -318,8 +313,6 @@ struct GameView: View {
             if isOpponent == false {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
-//                        let colNums = [gameState.p1board[0][col], gameState.p1board[1][col], gameState.p1board[2][col]]
-//                        let colSum = calculateColSum(colNums: colNums)
                         let colSum = isOpponent ? gameState.p2score[col] : gameState.p1score[col]
                         
                         Text("\(colSum)")
@@ -402,12 +395,11 @@ struct GameView: View {
                                         {
                                             // TODO: Implement game winner screen
                                             print("game over")
-                                            if (gameState.p1score.reduce(0, +) > gameState.p2score.reduce(0, +)){
+                                            if gameState.p1score.reduce(0, +) > gameState.p2score.reduce(0, +) {
                                                 // player won
                                                 gameState.gamesWon += 1
                                             } else {
                                                 // opponent won
-                                                
                                             }
                                             resetGame()
                                         } else {
