@@ -242,62 +242,98 @@ struct GameView: View {
         opponentAnimation = "Ratau-roll"
         rollDie(isOpponent: true)
         var possibleCols = [0, 1, 2]
-        var randomCol = possibleCols.randomElement() ?? -1
-        while gameState.p2board[2][randomCol] != 0 && possibleCols.count > 0 {
-            possibleCols.removeAll { $0 == randomCol }
-            randomCol = possibleCols.randomElement()!
+        for i in 0..<3 {
+            if gameState.p2board[2][i] != 0 {
+                possibleCols.removeAll(where: { $0 == i })
+            }
         }
-        if randomCol == -1 {
+        var dieCol = possibleCols.randomElement() ?? -1
+        if dieCol == -1 || possibleCols.count == 0 {
             return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            print("Inside asyncAfter closure")
-            print("randomCol: \(randomCol), roll: \(gameState.p2roll)")
-            // Check if randomCol is within bounds
-            if randomCol >= 0 && randomCol < gameState.p2board[0].count {
-                // place opponent die
-                if gameState.p2board[0][randomCol] == 0 {
-                    gameState.p2board[0][randomCol] = gameState.p2roll
-                } else if gameState.p2board[1][randomCol] == 0 {
-                    gameState.p2board[1][randomCol] = gameState.p2roll
-                } else if gameState.p2board[2][randomCol] == 0 {
-                    gameState.p2board[2][randomCol] = gameState.p2roll
-                }
-                
-                // Remove matching player dice
-                for i in stride(from: 2, through: 0, by: -1) {
-                    if gameState.p1board[i][randomCol] == gameState.p2roll {
-                        gameState.p1board[i][randomCol] = 0
-                        
-                        // shift any dice above the removed die
-                        if i < 2 && gameState.p1board[i + 1][randomCol] != 0 {
-                            gameState.p1board[i][randomCol] = gameState.p1board[i + 1][randomCol]
-                            gameState.p1board[i + 1][randomCol] = 0
-                        }
-                        
-                        // handle die at end of column
-                        if i == 0 && gameState.p1board[2][randomCol] != 0 {
-                            gameState.p1board[1][randomCol] = gameState.p1board[2][randomCol]
-                            gameState.p1board[2][randomCol] = 0
-                        }
+        // chose dieCol strategically if difficulty is on hard
+        if gameState.gameDifficulty == "Hard" {
+            // Prioritize combos
+            outerLoop: for col in possibleCols {
+                for row in 0..<3 {
+                    if gameState.p2board[row][col] == gameState.p2roll {
+                        dieCol = col
+                        print("Col \(dieCol) chosen for combo")
+                        print("Possible cols: \(possibleCols)")
+                        break outerLoop
                     }
                 }
             }
             
-            // Calculate column sum
-            let colNums = [gameState.p2board[0][randomCol], gameState.p2board[1][randomCol], gameState.p2board[2][randomCol]]
-            gameState.p2score[randomCol] = calculateColSum(colNums: colNums)
+            // Look for opportunities to destroy player dice
+            outerLoop: for col in possibleCols {
+                for row in 0..<3 {
+                    if gameState.p1board[row][col] == gameState.p2roll {
+                        dieCol = col
+                        print("Col \(dieCol) chosen to destroy player dice")
+                        print("Possible cols: \(possibleCols)")
+                        break outerLoop
+                    }
+                }
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        // Check if randomCol is within bounds
+        if dieCol >= 0 && dieCol < gameState.p2board[0].count {
+            // place opponent die
+            if gameState.p2board[0][dieCol] == 0 {
+                gameState.p2board[0][dieCol] = gameState.p2roll
+            } else if gameState.p2board[1][dieCol] == 0 {
+                gameState.p2board[1][dieCol] = gameState.p2roll
+            } else if gameState.p2board[2][dieCol] == 0 {
+                gameState.p2board[2][dieCol] = gameState.p2roll
+            } else {
+                print("Error: Impossible opponent col selected: \(dieCol)")
+                return
+            }
+                
+            print("Placed \(gameState.p2roll) in col \(dieCol)")
+            print(gameState.p2board)
+            print("Player board: \(gameState.p1board)")
+                
+            // Remove matching player dice
+            for i in stride(from: 2, through: 0, by: -1) {
+                if gameState.p1board[i][dieCol] == gameState.p2roll {
+                    gameState.p1board[i][dieCol] = 0
+                        
+                    // shift any dice above the removed die
+                    if i < 2 && gameState.p1board[i + 1][dieCol] != 0 {
+                        gameState.p1board[i][dieCol] = gameState.p1board[i + 1][dieCol]
+                        gameState.p1board[i + 1][dieCol] = 0
+                    }
+                        
+                    // handle die at end of column
+                    if i == 0 && gameState.p1board[2][dieCol] != 0 {
+                        gameState.p1board[1][dieCol] = gameState.p1board[2][dieCol]
+                        gameState.p1board[2][dieCol] = 0
+                    }
+                }
+            }
+        }
+            
+        // Calculate scores
+        let colNums = [gameState.p2board[0][dieCol], gameState.p2board[1][dieCol], gameState.p2board[2][dieCol]]
+        gameState.p2score[dieCol] = calculateColSum(colNums: colNums)
+            
+        let playerColNums = [gameState.p1board[0][dieCol], gameState.p1board[1][dieCol], gameState.p1board[2][dieCol]]
+        gameState.p1score[dieCol] = calculateColSum(colNums: playerColNums)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // reset opponent animation
-            opponentAnimation = "Ratau-idle"
+        // reset opponent animation
+        opponentAnimation = "Ratau-idle"
 
-            // player turn
-            gameState.p2roll = -1
-            gameState.isP1Turn = true
+        // player turn
+        gameState.p2roll = -1
+        gameState.isP1Turn = true
         }
-        print(gameState.p2board)
+        
         print("Exiting opponentTurn")
     }
     
