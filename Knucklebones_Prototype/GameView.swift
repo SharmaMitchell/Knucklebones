@@ -264,6 +264,25 @@ struct GameView: View {
                 } else if gameState.p2board[2][randomCol] == 0 {
                     gameState.p2board[2][randomCol] = gameState.p2roll
                 }
+                
+                // Remove matching player dice
+                for i in stride(from: 2, through: 0, by: -1) {
+                    if gameState.p1board[i][randomCol] == gameState.p2roll {
+                        gameState.p1board[i][randomCol] = 0
+                        
+                        // shift any dice above the removed die
+                        if i < 2 && gameState.p1board[i + 1][randomCol] != 0 {
+                            gameState.p1board[i][randomCol] = gameState.p1board[i + 1][randomCol]
+                            gameState.p1board[i + 1][randomCol] = 0
+                        }
+                        
+                        // handle die at end of column
+                        if i == 0 && gameState.p1board[2][randomCol] != 0 {
+                            gameState.p1board[1][randomCol] = gameState.p1board[2][randomCol]
+                            gameState.p1board[2][randomCol] = 0
+                        }
+                    }
+                }
             }
             
             // Calculate column sum
@@ -377,6 +396,26 @@ struct GameView: View {
                                     .opacity(0.01)
                                     .onTapGesture {
                                         addDieToCol(col: col, die: gameState.p1roll)
+                                        
+                                        // Remove matching dice from opponent column
+                                        for i in stride(from: 2, through: 0, by: -1) {
+                                            if gameState.p2board[i][col] == gameState.p1roll {
+                                                gameState.p2board[i][col] = 0
+                                                
+                                                // shift any dice above the removed die
+                                                if i < 2 && gameState.p2board[i + 1][col] != 0 {
+                                                    gameState.p2board[i][col] = gameState.p2board[i + 1][col]
+                                                    gameState.p2board[i + 1][col] = 0
+                                                }
+                                                
+                                                // handle die at end of column
+                                                if i == 0 && gameState.p2board[2][col] != 0 {
+                                                    gameState.p2board[1][col] = gameState.p2board[2][col]
+                                                    gameState.p2board[2][col] = 0
+                                                }
+                                            }
+                                        }
+                                        
                                         gameState.p1roll = -1
                                         gameState.isP1Turn = false
                                         previewDieInCol[0] = -1
@@ -387,6 +426,9 @@ struct GameView: View {
                                         // Update score
                                         let colNums = [gameState.p1board[0][col], gameState.p1board[1][col], gameState.p1board[2][col]]
                                         gameState.p1score[col] = calculateColSum(colNums: colNums)
+                                        
+                                        let oppColNums = [gameState.p2board[0][col], gameState.p2board[1][col], gameState.p2board[2][col]]
+                                        gameState.p2score[col] = calculateColSum(colNums: oppColNums)
                                         
                                         // if board is full, calculate winner
                                         if gameState.p1board[2][0] != 0 &&
