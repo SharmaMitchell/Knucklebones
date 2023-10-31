@@ -518,13 +518,29 @@ struct GameView: View {
     
     @ViewBuilder
     func inGameScreen() -> some View {
-        VStack {
-            opponentPanel()
-            playerBoard(isOpponent: true)
-            Spacer()
-                .frame(height: 20)
-            playerBoard(isOpponent: false)
-            playerPanel()
+        if verticalSizeClass == .regular {
+            VStack {
+                opponentPanel()
+                playerBoard(isOpponent: true)
+                Spacer()
+                    .frame(height: 20)
+                playerBoard(isOpponent: false)
+                playerPanel()
+            }
+        } else {
+            HStack {
+                VStack {
+                    opponentPanel()
+                    playerBoard(isOpponent: true)
+                }
+                
+                Spacer()
+                    .frame(width: 20)
+                VStack {
+                    playerBoard(isOpponent: false)
+                    playerPanel()
+                }
+            }
         }
     }
     
