@@ -570,6 +570,55 @@ struct GameView: View {
         }
     }
     
+    @ViewBuilder
+    func WinnerBanner() -> some View {
+        HStack {
+            Spacer()
+            
+            VStack {
+                Spacer()
+                Text("The Lamb Wins!")
+                    .font(Font.custom("Piazzolla", size: 36))
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("TextColor"))
+                GIFImage(name: currentAnimation)
+                    .frame(width: 200, height: 200)
+                Text("\(gameState.p1score.reduce(0, +))    -    \(gameState.p2score.reduce(0, +))")
+                    .font(Font.custom("Piazzolla", size: 26))
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("TextColor"))
+                HStack {
+                    Image("quit_button")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 110, height: 60)
+                        .onTapGesture {
+                            resetGame()
+                        }
+                    
+                    Image("play_button_small")
+                        .resizable()
+                        .frame(width: 170, height: 60)
+                        .padding(.all, 5)
+                        .onTapGesture {
+                            withAnimation {
+                                gameState.gameInProgress = true
+                            }
+                        }
+                }
+                
+                Spacer()
+            }
+            
+            Spacer()
+        }.background {
+            Color.black
+                .blur(radius: 10)
+                .edgesIgnoringSafeArea(.all)
+                .opacity(0.75)
+        }
+    }
+    
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all) // Set the background to black
@@ -606,6 +655,8 @@ struct GameView: View {
                 inGameScreen()
                     .padding()
             }
+            
+            WinnerBanner()
         }
     }
 }
