@@ -429,9 +429,11 @@ struct GameView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 60, height: 60)
                                         .background {
+                                            // TODO: Don't shift dice until removal animation over
+                                            // (Add delay after die removal before shifting)
                                             if !isOpponent {
                                                 Color("AccentColor")
-                                                    .cornerRadius(10)
+                                                    .cornerRadius(5)
                                                     .opacity(
                                                         gameState.p1board[row][col] != 0 ? 1 : 0
                                                     )
