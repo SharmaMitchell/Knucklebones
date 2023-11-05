@@ -64,7 +64,11 @@ struct RulesView: View {
                             .padding(.horizontal, 4)
                             .padding(.bottom, 2)
                     }
-                }
+                }.background {
+                    Color(.black)
+                        .opacity(0.75)
+
+                }.cornerRadius(10)
 
                 Spacer()
             }

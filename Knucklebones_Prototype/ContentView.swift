@@ -40,7 +40,6 @@ struct ContentView: View {
                 .environmentObject(gameState)
                 .tabItem {
                     Label("Stats", systemImage: "chart.xyaxis.line")
-                        .foregroundColor(.white)
                 }
             RulesView()
                 .tabItem {
