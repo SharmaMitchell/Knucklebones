@@ -132,29 +132,31 @@ struct StatsView: View {
                 }
                 Spacer()
 
-                if verticalSizeClass == .regular {
-                    Text("Statistics")
-                        .font(Font.custom("Piazzolla", size: 36))
-                        .fontWeight(.bold)
-                        .foregroundColor(Color("TextColor"))
-                        .padding(.bottom, 4)
+                ScrollView {
+                    if verticalSizeClass == .regular {
+                        Text("Statistics")
+                            .font(Font.custom("Piazzolla", size: 36))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                            .padding(.bottom, 4)
 
-                    totalRolls()
-
-                    Divider()
-                        .overlay(Color("TextColor"))
-
-                    totalWins()
-                } else {
-                    HStack(alignment: .top) {
-                        Spacer()
                         totalRolls()
 
                         Divider()
                             .overlay(Color("TextColor"))
 
                         totalWins()
-                        Spacer()
+                    } else {
+                        HStack(alignment: .top) {
+                            Spacer()
+                            totalRolls()
+
+                            Divider()
+                                .overlay(Color("TextColor"))
+
+                            totalWins()
+                            Spacer()
+                        }
                     }
                 }
 
