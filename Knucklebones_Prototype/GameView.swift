@@ -328,14 +328,18 @@ struct GameView: View {
                 gameState.p2board[2][1] != 0 &&
                 gameState.p2board[2][2] != 0
             {
-                print("game over")
                 if gameState.p1score.reduce(0, +) > gameState.p2score.reduce(0, +) {
                     // player won
                     gameState.gamesWon += 1
+                    withAnimation {
+                        gameState.winner = WinnerType.p1
+                    }
                 } else {
                     // opponent won
+                    withAnimation {
+                        gameState.winner = WinnerType.p2
+                    }
                 }
-                resetGame()
             } else {
                 // player turn
                 gameState.p2roll = -1
@@ -361,6 +365,8 @@ struct GameView: View {
         previewDieInCol[1] = -1
         previewDieInCol[2] = -1
         
+        gameState.winner = nil
+        
         // Small delay so app has time to reset state before exiting
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             withAnimation {
@@ -372,7 +378,7 @@ struct GameView: View {
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
         VStack {
-            if isOpponent == false {
+            if isOpponent == false && gameState.winner == nil {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
                         let colSum = isOpponent ? gameState.p2score[col] : gameState.p1score[col]
@@ -496,16 +502,17 @@ struct GameView: View {
                                             gameState.p1board[2][1] != 0 &&
                                             gameState.p1board[2][2] != 0
                                         {
-                                            // TODO: Implement game winner screen
-                                            print("game over")
                                             if gameState.p1score.reduce(0, +) > gameState.p2score.reduce(0, +) {
                                                 // player won
                                                 gameState.gamesWon += 1
+                                                withAnimation {
+                                                    gameState.winner = WinnerType.p1
+                                                }
                                             } else {
                                                 // opponent won
-                                            }
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                resetGame()
+                                                withAnimation {
+                                                    gameState.winner = WinnerType.p2
+                                                }
                                             }
                                         } else {
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -525,7 +532,7 @@ struct GameView: View {
                 }
             }
             
-            if isOpponent == true {
+            if isOpponent == true && gameState.winner == nil {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
                         let colSum = isOpponent ? gameState.p2score[col] : gameState.p1score[col]
@@ -546,13 +553,56 @@ struct GameView: View {
     func inGameScreen() -> some View {
         if verticalSizeClass == .regular {
             VStack {
-                opponentPanel()
+                if gameState.winner == nil {
+                    opponentPanel()
+                }
+                    
                 playerBoard(isOpponent: true)
                 Spacer()
                     .frame(height: 20)
                 playerBoard(isOpponent: false)
-                playerPanel()
+                if gameState.winner == nil {
+                    playerPanel()
+                }
+                    
+                if gameState.winner != nil {
+                    Text("\(gameState.winner == WinnerType.p1 ? "The Lamb" : "Ratau") Wins!")
+                        .font(Font.custom("Piazzolla", size: 26))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("TextColor"))
+                    HStack {
+                        Spacer()
+                        GIFImage(name: opponentAnimation)
+                            .frame(width: 70, height: 70)
+                        Spacer()
+                        GIFImage(name: opponentAnimation)
+                            .frame(width: 70, height: 70)
+                        Spacer()
+                    }
+                    Text("\(gameState.p1score.reduce(0, +))    -    \(gameState.p2score.reduce(0, +))")
+                        .font(Font.custom("Piazzolla", size: 26))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("TextColor"))
+                    HStack {
+                        Image("quit_button")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 110, height: 60)
+                            .onTapGesture {
+                                resetGame()
+                            }
+
+                        Image("play_button_small")
+                            .resizable()
+                            .frame(width: 170, height: 60)
+                            .padding(.all, 5)
+                            .onTapGesture {
+                                resetGame()
+                            }
+                    }
+                }
             }
+            
         } else {
             HStack {
                 VStack {
@@ -567,55 +617,6 @@ struct GameView: View {
                     playerPanel()
                 }
             }
-        }
-    }
-    
-    @ViewBuilder
-    func WinnerBanner() -> some View {
-        HStack {
-            Spacer()
-            
-            VStack {
-                Spacer()
-                Text("The Lamb Wins!")
-                    .font(Font.custom("Piazzolla", size: 36))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color("TextColor"))
-                GIFImage(name: currentAnimation)
-                    .frame(width: 200, height: 200)
-                Text("\(gameState.p1score.reduce(0, +))    -    \(gameState.p2score.reduce(0, +))")
-                    .font(Font.custom("Piazzolla", size: 26))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color("TextColor"))
-                HStack {
-                    Image("quit_button")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 110, height: 60)
-                        .onTapGesture {
-                            resetGame()
-                        }
-                    
-                    Image("play_button_small")
-                        .resizable()
-                        .frame(width: 170, height: 60)
-                        .padding(.all, 5)
-                        .onTapGesture {
-                            withAnimation {
-                                gameState.gameInProgress = true
-                            }
-                        }
-                }
-                
-                Spacer()
-            }
-            
-            Spacer()
-        }.background {
-            Color.black
-                .blur(radius: 10)
-                .edgesIgnoringSafeArea(.all)
-                .opacity(0.75)
         }
     }
     
@@ -655,8 +656,6 @@ struct GameView: View {
                 inGameScreen()
                     .padding()
             }
-            
-            WinnerBanner()
         }
     }
 }
