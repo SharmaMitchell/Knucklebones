@@ -293,7 +293,9 @@ struct GameView: View {
                 // Remove matching player dice
                 for i in stride(from: 2, through: 0, by: -1) {
                     if gameState.p1board[i][dieCol] == gameState.p2roll {
-                        gameState.p1board[i][dieCol] = 0
+                        withAnimation {
+                            gameState.p1board[i][dieCol] = 0
+                        }
                         
                         // shift any dice above the removed die
                         if i < 2 && gameState.p1board[i + 1][dieCol] != 0 {
@@ -420,6 +422,21 @@ struct GameView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 60, height: 60)
+                                        .background {
+                                            if !isOpponent {
+                                                Color("AccentColor")
+                                                    .cornerRadius(10)
+                                                    .opacity(
+                                                        gameState.p1board[row][col] != 0 ? 1 : 0
+                                                    )
+                                            } else {
+                                                Color("AccentColor")
+                                                    .cornerRadius(5)
+                                                    .opacity(
+                                                        gameState.p2board[reversedRow][col] != 0 ? 1 : 0
+                                                    )
+                                            }
+                                        }
                                         .padding(.horizontal, 20)
                                 }
                             }
@@ -441,18 +458,21 @@ struct GameView: View {
                                         // Remove matching dice from opponent column
                                         for i in stride(from: 2, through: 0, by: -1) {
                                             if gameState.p2board[i][col] == gameState.p1roll {
-                                                gameState.p2board[i][col] = 0
-                                                
-                                                // shift any dice above the removed die
-                                                if i < 2 && gameState.p2board[i + 1][col] != 0 {
-                                                    gameState.p2board[i][col] = gameState.p2board[i + 1][col]
-                                                    gameState.p2board[i + 1][col] = 0
+                                                withAnimation {
+                                                    gameState.p2board[i][col] = 0
                                                 }
-                                                
-                                                // handle die at end of column
-                                                if i == 0 && gameState.p2board[2][col] != 0 {
-                                                    gameState.p2board[1][col] = gameState.p2board[2][col]
-                                                    gameState.p2board[2][col] = 0
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                    // shift any dice above the removed die
+                                                    if i < 2 && gameState.p2board[i + 1][col] != 0 {
+                                                        gameState.p2board[i][col] = gameState.p2board[i + 1][col]
+                                                        gameState.p2board[i + 1][col] = 0
+                                                    }
+                                                    
+                                                    // handle die at end of column
+                                                    if i == 0 && gameState.p2board[2][col] != 0 {
+                                                        gameState.p2board[1][col] = gameState.p2board[2][col]
+                                                        gameState.p2board[2][col] = 0
+                                                    }
                                                 }
                                             }
                                         }
@@ -484,9 +504,13 @@ struct GameView: View {
                                             } else {
                                                 // opponent won
                                             }
-                                            resetGame()
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                resetGame()
+                                            }
                                         } else {
-                                            opponentTurn()
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                opponentTurn()
+                                            }
                                         }
                                     }
                             } else {
