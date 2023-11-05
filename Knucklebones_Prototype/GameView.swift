@@ -233,6 +233,7 @@ struct GameView: View {
             return colNums[0] + (colNums[1] * 4)
         } else {
             // All numbers are distinct, sum them up
+            print("\(colNums[0]) != \(colNums[1]) != \(colNums[2])")
             return colNums.reduce(0, +)
         }
     }
@@ -503,7 +504,8 @@ struct GameView: View {
             if isOpponent == true {
                 HStack {
                     ForEach(0..<3, id: \.self) { col in
-                        let colSum = gameState.p2board[0][col] + gameState.p2board[1][col] + gameState.p2board[2][col]
+                        let colSum = isOpponent ? gameState.p2score[col] : gameState.p1score[col]
+                        
                         Text("\(colSum)")
                             .font(Font.custom("Piazzolla", size: 16))
                             .fontWeight(.semibold)
