@@ -1,13 +1,12 @@
-![knucklebones](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/5132b1eb-0c3b-4ad5-8d8b-14a5f8eda2fe)
+![knucklebones](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/44ff9e57-a321-4ff3-9475-9d8b0ec6af8f)
 
 Knucklebones is a mini-game featured in the 2022 rougelike videogame [Cult of the Lamb](https://en.wikipedia.org/wiki/Cult_of_the_Lamb). This is a recreation of the game, implemented using SwiftUI and assets from the original game (taken from the Cult of the Lamb [official wiki](https://cult-of-the-lamb.fandom.com/wiki/Cult_of_the_Lamb_Wiki))
 
 ## UI Design
-![knucklebones_mockups](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/91859137-2124-4a14-a00a-497d6c9729fa)
+![knucklebones_mockups](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/1bce8b65-0b8d-4274-b754-0904ecb1ec15)
 
 ## User Flow
-![knucklebones_user_flow](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/7d4a9847-bf98-43a2-9dab-d7f25af219ab)
-
+![knucklebones_user_flow](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/6cac307a-854d-4e60-8bf4-08ed508a8b4c)
 
 <!-- ## Implementation -->
 
