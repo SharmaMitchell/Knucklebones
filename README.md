@@ -9,7 +9,7 @@ Knucklebones is a mini-game featured in the 2022 rougelike videogame [Cult of th
 ![knucklebones_user_flow](https://github.com/SharmaMitchell/Knucklebones/assets/90817905/7d4a9847-bf98-43a2-9dab-d7f25af219ab)
 
 
-## Implementation
+<!-- ## Implementation -->
 
 ## Asset Usage
 This project was created for educational purposes, as a term project for an iOS development class at the University of Houston. All assets (animated gifs, images, etc.) are property of the Cult of the Lamb team. This project was created for educational purposes; the use of this project's code or assets for profit is not permitted, as this would violate Fair Use copywright protections for the usage of the original game's assets.
