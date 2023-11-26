@@ -158,7 +158,11 @@ struct StatsView: View {
                             Spacer()
                         }
                     }
-                }
+                }.background {
+                    Color(.black)
+                        .opacity(0.75)
+
+                }.cornerRadius(10)
 
                 Spacer()
             }

@@ -12,6 +12,7 @@ struct GameView: View {
     
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     
+    // TODO: Add Normal difficulty, use Derp animation for easy mode
     @State private var showingDifficulty = false
     let difficultyOptions = ["Easy", "Hard"]
     
