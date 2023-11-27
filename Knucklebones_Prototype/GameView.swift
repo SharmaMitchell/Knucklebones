@@ -609,15 +609,52 @@ struct GameView: View {
         } else {
             HStack {
                 VStack {
-                    opponentPanel()
+                    if gameState.winner == nil {
+                        opponentPanel()
+                    }
+                    
                     playerBoard(isOpponent: true)
+                    
+                    if gameState.winner != nil {
+                        Text("\(gameState.winner == WinnerType.p1 ? "The Lamb" : "Ratau") Wins!")
+                            .font(Font.custom("Piazzolla", size: 26))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                        Text("\(gameState.p1score.reduce(0, +))    -    \(gameState.p2score.reduce(0, +))")
+                            .font(Font.custom("Piazzolla", size: 26))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColor"))
+                    }
                 }
                 
                 Spacer()
                     .frame(width: 20)
                 VStack {
                     playerBoard(isOpponent: false)
-                    playerPanel()
+                    
+                    if gameState.winner == nil {
+                        playerPanel()
+                    }
+                    
+                    if gameState.winner != nil {
+                        HStack {
+                            Image("quit_button")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 110, height: 60)
+                                .onTapGesture {
+                                    resetGame()
+                                }
+
+                            Image("play_button_small")
+                                .resizable()
+                                .frame(width: 170, height: 60)
+                                .padding(.all, 5)
+                                .onTapGesture {
+                                    resetGame()
+                                }
+                        }
+                    }
                 }
             }
         }
