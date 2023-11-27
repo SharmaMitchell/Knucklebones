@@ -10,24 +10,32 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject private var gameState: GameState
     
+    // Determine if device is in vertical or horizontal orientation
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     
     // TODO: Add Normal difficulty, use Derp animation for easy mode
     @State private var showingDifficulty = false
     let difficultyOptions = ["Easy", "Hard"]
     
+    // Lamb animation for home screen (evil animation on hard difficulty)
     let lambAnimations = ["Lamb-dance", "Lamb-evil"]
     var currentAnimation: String {
         let animationIndex = difficultyOptions.firstIndex(of: gameState.gameDifficulty)!
         return lambAnimations[animationIndex]
     }
     
-    @State private var isWhite = false
-    @State private var isFlashing = false
+    // Opacity logic for die placement
+    @State private var isWhite = false // Toggled every x seconds for flashing animation
+    @State private var isFlashing = false // Flashing animation on/off
+    // Track the row of preview dice in each column (-1 means no preview die in col)
     @State private var previewDieInCol: [Int] = [-1, -1, -1]
     
+    // Opponent animation for opponent panel
     @State private var opponentAnimation = "Ratau-idle"
     
+    /**
+     Play and Difficulty buttons displayed on landing screen
+     */
     @ViewBuilder
     func landingScreenButtons() -> some View {
         VStack {
@@ -57,6 +65,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Landing Screen with logo, lamb animation, and buttons
+     */
     @ViewBuilder
     func landingScreen() -> some View {
         if verticalSizeClass == .regular {
@@ -89,6 +100,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Opponent panel displaying opponent animation, name, and score
+     */
     @ViewBuilder
     func opponentPanel() -> some View {
         HStack {
@@ -119,6 +133,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Player panel displaying name (The Lamb), score, and buttons (quit and roll)
+     */
     @ViewBuilder
     func playerPanel() -> some View {
         VStack {
@@ -160,6 +177,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Roll player or opponent die, set gameState to the roll value
+     */
     func rollDie(isOpponent: Bool) {
         let randomRoll = Int.random(in: 1 ... 6)
         if isOpponent == true {
@@ -170,6 +190,9 @@ struct GameView: View {
         gameState.rolls[randomRoll - 1] += 1
     }
     
+    /**
+     Add die to player column (add to first available space)
+     */
     func addDieToCol(col: Int, die: Int) {
         for i in 0..<3 {
             if gameState.p1board[i][col] == 0 {
@@ -179,12 +202,18 @@ struct GameView: View {
         }
     }
     
+    /**
+     Flashing animation for player's die placement: toggle isWhite every 0.75 seconds
+     */
     func flash() {
         withAnimation(Animation.easeInOut(duration: 0.75).repeatForever()) {
             isWhite.toggle()
         }
     }
     
+    /**
+     Determine if there are 2 of the same value in a given column (for matching dice colors)
+     */
     func twoInCol(num: Int, col: Int, isOpponent: Bool) -> Bool {
         let board = isOpponent ? gameState.p2board : gameState.p1board
         
@@ -205,6 +234,9 @@ struct GameView: View {
         return false
     }
     
+    /**
+     Determine if there are 3 of the same value in a given column (for matching dice colors)
+     */
     func threeInCol(col: Int, isOpponent: Bool) -> Bool {
         if !isOpponent {
             if gameState.p1board[2][col] == 0 {
@@ -219,6 +251,9 @@ struct GameView: View {
         return gameState.p2board[0][col] == gameState.p2board[1][col] && gameState.p2board[1][col] == gameState.p2board[2][col]
     }
     
+    /**
+     Calculate column sums (called upon die placement in a given column)
+     */
     func calculateColSum(colNums: [Int]) -> Int {
         if colNums[0] == colNums[1] && colNums[1] == colNums[2] {
             // All three numbers are the same, triple the value
@@ -239,6 +274,18 @@ struct GameView: View {
         }
     }
     
+    /**
+     Opponent turn logic.
+        - Play opponent rolling animation
+        - Roll die
+        - Choose column (randomly on easy mode, strategically on hard mode)
+        - Place die in chosen column
+        - Remove matching player dice (in same column on player board)
+        - Shift down any player dice that were above removed dice
+        - Calculate scores opponent score
+        - Calculate player score (to update if any dice were removed)
+        - Calculate winner if board is full after die placement
+     */
     func opponentTurn() {
         opponentAnimation = "Ratau-roll"
         rollDie(isOpponent: true)
@@ -349,6 +396,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Reset game state upon game quit
+     */
     func resetGame() {
         isWhite = false
         isFlashing = false
@@ -376,6 +426,17 @@ struct GameView: View {
         }
     }
 
+    /**
+     Board for player and opponent:
+        - Display dice (including colored dice for matching dice in the same column)
+        - Display scores from each column
+        - After player rolls a die:
+            - Display the die in all possible columns with reduced opacity
+            - Animate the opacity of the example die placements
+            - On tap, place the die in the corresponding column
+        - On die removal, flash red
+            - Dice are given a red background such that upon removal with animation they fade to red before fading out entirely
+     */
     @ViewBuilder
     func playerBoard(isOpponent: Bool) -> some View {
         VStack {
@@ -552,6 +613,9 @@ struct GameView: View {
         }
     }
     
+    /**
+     Main game view displaying boards, scores, player panels, and winner panels (upon game over)
+     */
     @ViewBuilder
     func inGameScreen() -> some View {
         if verticalSizeClass == .regular {

@@ -10,8 +10,12 @@ import SwiftUI
 struct StatsView: View {
     @EnvironmentObject private var gameState: GameState
 
+    // Determine if device is in vertical or horizontal orientation
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
 
+    /**
+     Display die icon and amount of rolls for a given die vaule
+     */
     @ViewBuilder
     func rollStats(die: Int) -> some View {
         let imageName = "\(die + 1)_die"
@@ -29,6 +33,10 @@ struct StatsView: View {
         }
     }
 
+    /**
+     Display total rolls for each die value (1-6)
+        - Note that rollStats is called with zero-indexed die values
+     */
     @ViewBuilder
     func totalRolls() -> some View {
         VStack {
@@ -51,6 +59,9 @@ struct StatsView: View {
         }
     }
 
+    /**
+     Display total player wins and games played
+     */
     @ViewBuilder
     func totalWins() -> some View {
         VStack {

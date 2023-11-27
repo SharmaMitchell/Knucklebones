@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RulesView: View {
+    // Determine if device is in vertical or horizontal orientation
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
 
+    // Game rules to be mapped in the ScrollView
     let rules = [
         "The game consists of two 3x3 boards. One belongs to you (the lamb), and the other belongs to your opponent.",
         "Each turn, you roll a 6-sided die, and must place it in a column on your board.",
