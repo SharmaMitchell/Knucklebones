@@ -158,7 +158,7 @@ struct GameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 110, height: 60)
                     .onTapGesture {
-                        resetGame()
+                        resetGame(playAgain: false)
                     }
                 
                 Spacer()
@@ -399,7 +399,7 @@ struct GameView: View {
     /**
      Reset game state upon game quit
      */
-    func resetGame() {
+    func resetGame(playAgain: Bool) {
         isWhite = false
         isFlashing = false
         gameState.isP1Turn = true
@@ -418,10 +418,12 @@ struct GameView: View {
         
         gameState.winner = nil
         
-        // Small delay so app has time to reset state before exiting
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            withAnimation {
-                gameState.gameInProgress = false
+        if !playAgain {
+            // Small delay so app has time to reset state before exiting
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                withAnimation {
+                    gameState.gameInProgress = false
+                }
             }
         }
     }
@@ -660,7 +662,7 @@ struct GameView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 110, height: 60)
                             .onTapGesture {
-                                resetGame()
+                                resetGame(playAgain: false)
                             }
 
                         Image("play_button_small")
@@ -668,7 +670,7 @@ struct GameView: View {
                             .frame(width: 170, height: 60)
                             .padding(.all, 5)
                             .onTapGesture {
-                                resetGame()
+                                resetGame(playAgain: true)
                             }
                     }
                 }
@@ -711,7 +713,7 @@ struct GameView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 110, height: 60)
                                 .onTapGesture {
-                                    resetGame()
+                                    resetGame(playAgain: false)
                                 }
 
                             Image("play_button_small")
@@ -719,7 +721,7 @@ struct GameView: View {
                                 .frame(width: 170, height: 60)
                                 .padding(.all, 5)
                                 .onTapGesture {
-                                    resetGame()
+                                    resetGame(playAgain: true)
                                 }
                         }
                     }
