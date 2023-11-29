@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A248D0802B17AD5A0050A8AC /* Lamb-lose-loop.gif in Resources */ = {isa = PBXBuildFile; fileRef = A248D07C2B17AD5A0050A8AC /* Lamb-lose-loop.gif */; };
+		A248D0812B17AD5A0050A8AC /* Ratau-win-loop.gif in Resources */ = {isa = PBXBuildFile; fileRef = A248D07D2B17AD5A0050A8AC /* Ratau-win-loop.gif */; };
+		A248D0822B17AD5A0050A8AC /* Lamb-win-loop.gif in Resources */ = {isa = PBXBuildFile; fileRef = A248D07E2B17AD5A0050A8AC /* Lamb-win-loop.gif */; };
+		A248D0832B17AD5A0050A8AC /* Ratau-lose-loop.gif in Resources */ = {isa = PBXBuildFile; fileRef = A248D07F2B17AD5A0050A8AC /* Ratau-lose-loop.gif */; };
 		A281BEAA2AC3E429001B3779 /* Ratau-idle.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEA92AC3E429001B3779 /* Ratau-idle.gif */; };
 		A281BEAC2AC3E479001B3779 /* Lamb-evil.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */; };
 		A281BEAE2AC3E483001B3779 /* Lamb-dance.gif in Resources */ = {isa = PBXBuildFile; fileRef = A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */; };
@@ -23,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A248D07C2B17AD5A0050A8AC /* Lamb-lose-loop.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-lose-loop.gif"; sourceTree = "<group>"; };
+		A248D07D2B17AD5A0050A8AC /* Ratau-win-loop.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Ratau-win-loop.gif"; sourceTree = "<group>"; };
+		A248D07E2B17AD5A0050A8AC /* Lamb-win-loop.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-win-loop.gif"; sourceTree = "<group>"; };
+		A248D07F2B17AD5A0050A8AC /* Ratau-lose-loop.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Ratau-lose-loop.gif"; sourceTree = "<group>"; };
 		A281BEA92AC3E429001B3779 /* Ratau-idle.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Ratau-idle.gif"; sourceTree = "<group>"; };
 		A281BEAB2AC3E479001B3779 /* Lamb-evil.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-evil.gif"; sourceTree = "<group>"; };
 		A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Lamb-dance.gif"; sourceTree = "<group>"; };
@@ -54,6 +62,10 @@
 		A2E1E5F22AD33A5900F9526B /* gifs */ = {
 			isa = PBXGroup;
 			children = (
+				A248D07C2B17AD5A0050A8AC /* Lamb-lose-loop.gif */,
+				A248D07E2B17AD5A0050A8AC /* Lamb-win-loop.gif */,
+				A248D07F2B17AD5A0050A8AC /* Ratau-lose-loop.gif */,
+				A248D07D2B17AD5A0050A8AC /* Ratau-win-loop.gif */,
 				A281BEA92AC3E429001B3779 /* Ratau-idle.gif */,
 				A2F7EB142AE4A3E200A293B1 /* Ratau-roll.gif */,
 				A281BEAD2AC3E483001B3779 /* Lamb-dance.gif */,
@@ -171,10 +183,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2F7EB152AE4A3E200A293B1 /* Ratau-roll.gif in Resources */,
+				A248D0802B17AD5A0050A8AC /* Lamb-lose-loop.gif in Resources */,
 				A281BEAA2AC3E429001B3779 /* Ratau-idle.gif in Resources */,
 				A2F1A5E62ABFDA7000EE164D /* Preview Assets.xcassets in Resources */,
+				A248D0812B17AD5A0050A8AC /* Ratau-win-loop.gif in Resources */,
 				A281BEAE2AC3E483001B3779 /* Lamb-dance.gif in Resources */,
 				A2F1A6092ABFF04200EE164D /* Piazzolla-VariableFont_opsz,wght.ttf in Resources */,
+				A248D0822B17AD5A0050A8AC /* Lamb-win-loop.gif in Resources */,
+				A248D0832B17AD5A0050A8AC /* Ratau-lose-loop.gif in Resources */,
 				A281BEAC2AC3E479001B3779 /* Lamb-evil.gif in Resources */,
 				A2F1A5E32ABFDA7000EE164D /* Assets.xcassets in Resources */,
 			);

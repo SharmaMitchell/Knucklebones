@@ -639,10 +639,14 @@ struct GameView: View {
                         .foregroundColor(Color("TextColor"))
                     HStack {
                         Spacer()
-                        GIFImage(name: opponentAnimation)
+                        GIFImage(name: gameState.winner == WinnerType.p1
+                            ? "Lamb-win-loop"
+                            : "Lamb-lose-loop")
                             .frame(width: 70, height: 70)
                         Spacer()
-                        GIFImage(name: opponentAnimation)
+                        GIFImage(name: gameState.winner == WinnerType.p2
+                            ? "Ratau-win-loop"
+                            : "Ratau-lose-loop")
                             .frame(width: 70, height: 70)
                         Spacer()
                     }
